@@ -1,9 +1,11 @@
-gdrive
+GdriveCLI
 ======
 
+## Note
+This project is fork (prasmussen/gdrive)[https://github.com/prasmussen/gdrive] with 
 
 ## Overview
-gdrive is a command line utility for interacting with Google Drive.
+GdriveCLI is a command line utility for interacting with Google Drive.
 
 ## Important
 
@@ -11,12 +13,8 @@ gdrive is a command line utility for interacting with Google Drive.
 2. https://console.cloud.google.com/apis/credentials and application type to be Desktop App give some name
 3. In "OAuth consent screen", set Publishing status to Testing; User type to External; In "Test users" add your email address.
 
-
-
-
-
 ### Syncing
-Gdrive supports basic syncing. It only syncs one way at the time and works
+gdrivecli supports basic syncing. It only syncs one way at the time and works
 more like rsync than e.g. dropbox. Files that are synced to google drive
 are tagged with an appProperty so that the files on drive can be traversed
 faster. This means that you can't upload files with `gdrive upload` into
@@ -43,31 +41,31 @@ rules as [.gitignore](https://git-scm.com/docs/gitignore), except that gdrive on
 
 ## Usage
 ```
-gdrive [global] list [options]                                 List files
-gdrive [global] download [options] <fileId>                    Download file or directory
-gdrive [global] download query [options] <query>               Download all files and directories matching query
-gdrive [global] upload [options] <path>                        Upload file or directory
-gdrive [global] upload - [options] <name>                      Upload file from stdin
-gdrive [global] update [options] <fileId> <path>               Update file, this creates a new revision of the file
-gdrive [global] info [options] <fileId>                        Show file info
-gdrive [global] mkdir [options] <name>                         Create directory
-gdrive [global] share [options] <fileId>                       Share file or directory
-gdrive [global] share list <fileId>                            List files permissions
-gdrive [global] share revoke <fileId> <permissionId>           Revoke permission
-gdrive [global] delete [options] <fileId>                      Delete file or directory
-gdrive [global] sync list [options]                            List all syncable directories on drive
-gdrive [global] sync content [options] <fileId>                List content of syncable directory
-gdrive [global] sync download [options] <fileId> <path>        Sync drive directory to local directory
-gdrive [global] sync upload [options] <path> <fileId>          Sync local directory to drive
-gdrive [global] changes [options]                              List file changes
-gdrive [global] revision list [options] <fileId>               List file revisions
-gdrive [global] revision download [options] <fileId> <revId>   Download revision
-gdrive [global] revision delete <fileId> <revId>               Delete file revision
-gdrive [global] import [options] <path>                        Upload and convert file to a google document, see 'about import' for available conversions
-gdrive [global] export [options] <fileId>                      Export a google document
-gdrive [global] about [options]                                Google drive metadata, quota usage
-gdrive [global] about import                                   Show supported import formats
-gdrive [global] about export                                   Show supported export formats
+gdrivecli [global] list [options]                                 List files
+gdrivecli [global] download [options] <fileId>                    Download file or directory
+gdrivecli [global] download query [options] <query>               Download all files and directories matching query
+gdrivecli [global] upload [options] <path>                        Upload file or directory
+gdrivecli [global] upload - [options] <name>                      Upload file from stdin
+gdrivecli [global] update [options] <fileId> <path>               Update file, this creates a new revision of the file
+gdrivecli [global] info [options] <fileId>                        Show file info
+gdrivecli [global] mkdir [options] <name>                         Create directory
+gdrivecli [global] share [options] <fileId>                       Share file or directory
+gdrivecli [global] share list <fileId>                            List files permissions
+gdrivecli [global] share revoke <fileId> <permissionId>           Revoke permission
+gdrivecli [global] delete [options] <fileId>                      Delete file or directory
+gdrivecli [global] sync list [options]                            List all syncable directories on drive
+gdrivecli [global] sync content [options] <fileId>                List content of syncable directory
+gdrivecli [global] sync download [options] <fileId> <path>        Sync drive directory to local directory
+gdrivecli [global] sync upload [options] <path> <fileId>          Sync local directory to drive
+gdrivecli [global] changes [options]                              List file changes
+gdrivecli [global] revision list [options] <fileId>               List file revisions
+gdrivecli [global] revision download [options] <fileId> <revId>   Download revision
+gdrivecli [global] revision delete <fileId> <revId>               Delete file revision
+gdrivecli [global] import [options] <path>                        Upload and convert file to a google document, see 'about import' for available conversions
+gdrivecli [global] export [options] <fileId>                      Export a google document
+gdrivecli [global] about [options]                                Google drive metadata, quota usage
+gdrivecli [global] about import                                   Show supported import formats
+gdrivecli [global] about export                                   Show supported export formats
 gdrive version                                                 Print application version
 gdrive help                                                    Print help
 gdrive help <command>                                          Print command help
@@ -76,10 +74,12 @@ gdrive help <command> <subcommand>                             Print subcommand 
 
 #### List files
 ```
-gdrive [global] list [options]
+gdrivecli [global] list [options]
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -103,10 +103,12 @@ List file in subdirectory
 
 #### Download file or directory
 ```
-gdrive [global] download [options] <fileId>
+gdrivecli [global] download [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -123,10 +125,12 @@ options:
 
 #### Download all files and directories matching query
 ```
-gdrive [global] download query [options] <query>
+gdrivecli [global] download query [options] <query>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -140,10 +144,12 @@ options:
 
 #### Upload file or directory
 ```
-gdrive [global] upload [options] <path>
+gdrivecli [global] upload [options] <path>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -163,10 +169,12 @@ options:
 
 #### Upload file from stdin
 ```
-gdrive [global] upload - [options] <name>
+gdrivecli [global] upload - [options] <name>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -183,10 +191,12 @@ options:
 
 #### Update file, this creates a new revision of the file
 ```
-gdrive [global] update [options] <fileId> <path>
+gdrivecli [global] update [options] <fileId> <path>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -203,10 +213,12 @@ options:
 
 #### Show file info
 ```
-gdrive [global] info [options] <fileId>
+gdrivecli [global] info [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -217,10 +229,12 @@ options:
 
 #### Create directory
 ```
-gdrive [global] mkdir [options] <name>
+gdrivecli [global] mkdir [options] <name>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -232,10 +246,12 @@ options:
 
 #### Share file or directory
 ```
-gdrive [global] share [options] <fileId>
+gdrivecli [global] share [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -250,10 +266,12 @@ options:
 
 #### List files permissions
 ```
-gdrive [global] share list <fileId>
+gdrivecli [global] share list <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -261,10 +279,12 @@ global:
 
 #### Revoke permission
 ```
-gdrive [global] share revoke <fileId> <permissionId>
+gdrivecli [global] share revoke <fileId> <permissionId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -272,10 +292,12 @@ global:
 
 #### Delete file or directory
 ```
-gdrive [global] delete [options] <fileId>
+gdrivecli [global] delete [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -286,10 +308,12 @@ options:
 
 #### List all syncable directories on drive
 ```
-gdrive [global] sync list [options]
+gdrivecli [global] sync list [options]
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -300,10 +324,12 @@ options:
 
 #### List content of syncable directory
 ```
-gdrive [global] sync content [options] <fileId>
+gdrivecli [global] sync content [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -317,10 +343,12 @@ options:
 
 #### Sync drive directory to local directory
 ```
-gdrive [global] sync download [options] <fileId> <path>
+gdrivecli [global] sync download [options] <fileId> <path>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -337,10 +365,12 @@ options:
 
 #### Sync local directory to drive
 ```
-gdrive [global] sync upload [options] <path> <fileId>
+gdrivecli [global] sync upload [options] <path> <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -358,10 +388,12 @@ options:
 
 #### List file changes
 ```
-gdrive [global] changes [options]
+gdrivecli [global] changes [options]
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -376,10 +408,12 @@ options:
 
 #### List file revisions
 ```
-gdrive [global] revision list [options] <fileId>
+gdrivecli [global] revision list [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -392,10 +426,12 @@ options:
 
 #### Download revision
 ```
-gdrive [global] revision download [options] <fileId> <revId>
+gdrivecli [global] revision download [options] <fileId> <revId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -410,10 +446,12 @@ options:
 
 #### Delete file revision
 ```
-gdrive [global] revision delete <fileId> <revId>
+gdrivecli [global] revision delete <fileId> <revId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -421,10 +459,12 @@ global:
 
 #### Upload and convert file to a google document, see 'about import' for available conversions
 ```
-gdrive [global] import [options] <path>
+gdrivecli [global] import [options] <path>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -436,10 +476,12 @@ options:
 
 #### Export a google document
 ```
-gdrive [global] export [options] <fileId>
+gdrivecli [global] export [options] <fileId>
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -452,10 +494,12 @@ options:
 
 #### Google drive metadata, quota usage
 ```
-gdrive [global] about [options]
+gdrivecli [global] about [options]
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -466,10 +510,12 @@ options:
 
 #### Show supported import formats
 ```
-gdrive [global] about import
+gdrivecli [global] about import
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
@@ -477,10 +523,12 @@ global:
 
 #### Show supported export formats
 ```
-gdrive [global] about export
+gdrivecli [global] about export
 
 global:
   -c, --config <configDir>         Application path, default: /Users/<user>/.gdrive
+  --client-id <clientId>           Google Client Id
+  --client-secret <clientSecret>   Google Client Secret
   --refresh-token <refreshToken>   Oauth refresh token used to get access token (for advanced users)
   --access-token <accessToken>     Oauth access token, only recommended for short-lived requests because of short lifetime (for advanced users)
   --service-account <accountFile>  Oauth service account filename, used for server to server communication without user interaction (file is relative to config dir)
